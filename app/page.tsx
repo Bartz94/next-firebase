@@ -17,7 +17,7 @@ export default function Home() {
         </Text>
 
 
-        <Link href='/login'>
+        <Link href='/playground'>
           <Button colorScheme='purple' variant='solid'>Click to start</Button>
         </Link>
       </section>

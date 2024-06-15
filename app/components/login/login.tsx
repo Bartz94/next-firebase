@@ -1,8 +1,31 @@
-// pages/login.js
+'use client'
 import { Box, Button, Input, Link, Text, VStack, Heading } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import { auth } from '../../lib/firebase/firebaseConfig';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useState } from 'react';
 
 export default function Login() {
+    const [emailInput, setEmailInput] = useState<string | ''>('');
+    const [passwordInput, setPasswordInput] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const onLogin = () => {
+
+        setLoading(true);
+
+        signInWithEmailAndPassword(auth, emailInput, passwordInput)
+            .then((userCredential) => {
+                setLoading(false);
+                setEmailInput('')
+                setPasswordInput('')
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            })
+    }
+
+
     return (
         <Box
             display="flex"
@@ -25,21 +48,19 @@ export default function Login() {
                     boxShadow="md"
                 >
                     <Heading as="h2" size="lg">
-                        Sign In
+                        Log In
                     </Heading>
                 </Box>
                 <VStack spacing={4} align="stretch" mt={8}>
-                    <Input placeholder="Email" type="email" />
-                    <Input placeholder="Password" type="password" />
-                    <Button colorScheme="purple" size="md" width="100%">
-                        Sign In
+                    <Input value={emailInput} onChange={(e) => setEmailInput(e.target.value)} placeholder="Email" type="email" />
+                    <Input value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} placeholder="Password" type="password" />
+                    <Button onClick={() => onLogin()} colorScheme="purple" size="md" width="100%">
+                        Log In
                     </Button>
                     <Box borderBottom="1px" borderColor="gray.200" my={4} />
                     <Text textAlign="center">
                         Don&apos;t have an account yet?{' '}
-                        <NextLink href="/register" passHref>
-                            <Link color="purple.500">Sign up here</Link>
-                        </NextLink>
+                        <Link href="/register" color="purple.500">Register here</Link>
                     </Text>
                 </VStack>
             </Box>
