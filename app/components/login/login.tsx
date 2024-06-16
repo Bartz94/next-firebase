@@ -25,8 +25,11 @@ export default function Login() {
             })
             .catch((error) => {
                 console.log(error)
+                const errorCode = error.code
+                const errorMessage = error.message
+                console.log(errorCode, errorMessage)
                 setLoading(false)
-                // toast.update(toastIdRef.current, errorToastConfig(`Error`, error))
+                toast.update(toastIdRef.current, errorToastConfig(`Error`, ` ${errorMessage}`))
             })
     }
 

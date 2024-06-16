@@ -34,7 +34,7 @@ export default function Register() {
                 const errorMessage = error.message
                 console.log(errorCode, errorMessage)
                 setLoading(false)
-                toast.update(toastIdRef.current, errorToastConfig(`Can't create an account`, errorCode))
+                toast.update(toastIdRef.current, errorToastConfig(`Can't create an account`, errorMessage))
 
             })
     }
