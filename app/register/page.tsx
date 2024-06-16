@@ -67,8 +67,8 @@ export default function Register() {
                             </Heading>
                         </Box>
                         <VStack spacing={4} align="stretch" mt={8}>
-                            <Text className='text-center'>You have successfully registrated an account. You can now log in {` `}
-                                <Link href="/playground" color="purple.500">here</Link>.
+                            <Text className='text-center'>Registration is completed and your are already logged in. {` `}
+                                <Link href="/playground" color="purple.500">Take me to the playground</Link>.
                             </Text>
                         </VStack>
                     </Box>
@@ -105,7 +105,7 @@ export default function Register() {
                             <Input value={emailInput} onChange={(e) => setEmailInput(e.target.value)} placeholder="Email" type="email" />
                             <Input value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} placeholder="Password" type="password" />
                             {loading ? (
-                                <Box w='100%'>
+                                <Box className='flex justify-center' w='100%'>
                                     <Spinner color='purple' />
                                 </Box>
                             ) : (

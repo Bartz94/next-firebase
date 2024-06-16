@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
 html {
   margin: 0;
@@ -14,4 +15,17 @@ body {
   background-color: #74EBD5;
   background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%) !important;
 
+}
+
+.flames {
+  position: absolute;
+  bottom: 1;
+  left: 50%;
+  width: 800px;
+  height: 850px;
+  transform: translateX(-50%);
+  background: url('../public/flames.gif') no-repeat center center;
+  background-size: cover;
+  z-index: 4;
+  opacity: 70%;
 }

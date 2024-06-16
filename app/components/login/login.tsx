@@ -1,30 +1,34 @@
 'use client'
-import { Box, Button, Input, Link, Text, VStack, Heading } from '@chakra-ui/react';
+import { Box, Button, Input, Link, Text, VStack, Heading, useToast, Spinner } from '@chakra-ui/react';
 import { auth } from '../../lib/firebase/firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { errorToastConfig, loadingToastConfig, successToastConfig } from '@/app/lib/chakra/toastUtils';
 
 export default function Login() {
-    const [emailInput, setEmailInput] = useState<string | ''>('');
-    const [passwordInput, setPasswordInput] = useState<string>('');
-    const [loading, setLoading] = useState<boolean>(false);
+    const toast = useToast()
+    const toastIdRef: any = useRef()
+    const [emailInput, setEmailInput] = useState<string | ''>('')
+    const [passwordInput, setPasswordInput] = useState<string>('')
+    const [loading, setLoading] = useState<boolean>(false)
 
     const onLogin = () => {
-
-        setLoading(true);
+        toastIdRef.current = toast(loadingToastConfig('Login...', ''))
+        setLoading(true)
 
         signInWithEmailAndPassword(auth, emailInput, passwordInput)
             .then((userCredential) => {
-                setLoading(false);
+                setLoading(false)
                 setEmailInput('')
                 setPasswordInput('')
+                toast.update(toastIdRef.current, successToastConfig('Success', 'You have successfully log in'))
             })
             .catch((error) => {
-                console.log(error);
-                setLoading(false);
+                console.log(error)
+                setLoading(false)
+                // toast.update(toastIdRef.current, errorToastConfig(`Error`, error))
             })
     }
-
 
     return (
         <Box
@@ -54,9 +58,15 @@ export default function Login() {
                 <VStack spacing={4} align="stretch" mt={8}>
                     <Input value={emailInput} onChange={(e) => setEmailInput(e.target.value)} placeholder="Email" type="email" />
                     <Input value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} placeholder="Password" type="password" />
-                    <Button onClick={() => onLogin()} colorScheme="purple" size="md" width="100%">
-                        Log In
-                    </Button>
+                    {loading ? (
+                        <Box className='flex justify-center' w='100%'>
+                            <Spinner color='purple' />
+                        </Box>
+                    ) : (
+                        <Button onClick={() => onLogin()} colorScheme="purple" size="md" width="100%">
+                            Log In
+                        </Button>
+                    )}
                     <Box borderBottom="1px" borderColor="gray.200" my={4} />
                     <Text textAlign="center">
                         Don&apos;t have an account yet?{' '}

@@ -6,7 +6,7 @@ interface ToastProps {
 
 export const successToastConfig = (title: string, message: string) => {
     return {
-        position: 'bottom-right',
+        position: 'bottom',
         title: title,
         description: message,
         status: 'success',
@@ -16,7 +16,7 @@ export const successToastConfig = (title: string, message: string) => {
 }
 export const errorToastConfig = (title: string, message: string) => {
     return {
-        position: 'bottom-right',
+        position: 'bottom',
         title: title,
         description: message,
         status: 'error',
@@ -27,7 +27,7 @@ export const errorToastConfig = (title: string, message: string) => {
 
 export const loadingToastConfig = (title: React.ReactNode, message: React.ReactNode) => {
     return {
-        position: 'bottom-right',
+        position: 'bottom',
         title: title,
         description: message,
         status: 'loading',
