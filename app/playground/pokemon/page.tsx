@@ -1,25 +1,25 @@
 'use client'
 
-import { useGetAllPokemonsQuery } from "@/app/lib/redux/api/pokemonApi";
-import { Box, Text, Image, Spinner, Input, SimpleGrid, Center } from "@chakra-ui/react";
+import { useGetAllPokemonsQuery } from "@/app/lib/redux/api/pokemonApi"
+import { Box, Text, Image, Spinner, Input, SimpleGrid, Center } from "@chakra-ui/react"
 import { useEffect, useState } from "react";
 import PokemonCard from "./components/pokemonCard"
 
 const PokemonApi: React.FC = () => {
     const { data: allPokemons, error: allPokemonsError, isLoading: allPokemonsIsLoading } = useGetAllPokemonsQuery(151)
-    const [searchTerm, setSearchTerm] = useState('');
-    const [pokemonDetails, setPokemonDetails] = useState<any[]>([]);
+    const [searchTerm, setSearchTerm] = useState('')
+    const [pokemonDetails, setPokemonDetails] = useState<any[]>([])
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value.toLowerCase());
+        setSearchTerm(event.target.value.toLowerCase())
     };
 
     useEffect(() => {
         if (allPokemons) {
             Promise.all(
                 allPokemons.results.map(async (pokemon: { name: string }) => {
-                    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
-                    const data = await response.json();
+                    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
+                    const data = await response.json()
                     return {
                         name: pokemon.name,
                         imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png`,
@@ -30,15 +30,13 @@ const PokemonApi: React.FC = () => {
                         })),
                     };
                 })
-            ).then((details) => setPokemonDetails(details));
+            ).then((details) => setPokemonDetails(details))
         }
-    }, [allPokemons]);
+    }, [allPokemons])
 
     const filteredPokemons = pokemonDetails.filter((pokemon) =>
         pokemon.name.toLowerCase().includes(searchTerm)
-    );
-
-    console.log(filteredPokemons)
+    )
 
     return (
         <Box p={4}>

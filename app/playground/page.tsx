@@ -20,7 +20,7 @@ const Playground = () => {
         <div className="flex justify-center items-center h-screen">
             <TiltCard
                 imageSrc="/pokeapi-img.png"
-                title="Pokemaon Api"
+                title="Pokemon Api"
                 description="Search your favorite pokemon and hopefully add them to your team"
                 onNavigate={navigateToPokemon}
             />
