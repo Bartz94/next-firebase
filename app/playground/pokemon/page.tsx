@@ -1,7 +1,7 @@
 'use client'
 
 import { useGetAllPokemonsQuery } from "@/app/lib/redux/api/pokemonApi";
-import { Box, Text, Image, Spinner, Input, SimpleGrid } from "@chakra-ui/react";
+import { Box, Text, Image, Spinner, Input, SimpleGrid, Center } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import PokemonCard from "./components/pokemonCard"
 
@@ -42,17 +42,21 @@ const PokemonApi: React.FC = () => {
 
     return (
         <Box p={4}>
-            <Text fontSize="2xl" mb={4} textAlign="center">Pokemon List</Text>
+            <Center marginBottom={'50px'}>
+                <img className="w-[900px]" src={'/choose-your-squad.png'} alt={'Choose your squad image'} />
+            </Center>
             <Input
                 placeholder="Search Pokemon"
                 value={searchTerm}
                 onChange={handleSearchChange}
                 mb={4}
             />
-            {allPokemonsIsLoading && <Spinner />}
-            {allPokemonsError && <Text color="red.500">Oh no, there was an error</Text>}
-            {filteredPokemons && (
-                <SimpleGrid columns={[1, 2, 3, 4]} spacing={4}>
+            {allPokemonsIsLoading ? (
+                <Center height='300px'>
+                    <Spinner thickness="4px" color="#356ABC" size='xl' />
+                </Center>
+            ) : filteredPokemons && (
+                <SimpleGrid justifyContent="center" alignItems="center" columns={[1, 2, 3, 4, 5]} spacing={4}>
                     {filteredPokemons.map((pokemon) => (
                         <PokemonCard
                             key={pokemon.name}
@@ -65,7 +69,10 @@ const PokemonApi: React.FC = () => {
                         />
                     ))}
                 </SimpleGrid>
-            )}
+            )
+            }
+            {!allPokemonsIsLoading && filteredPokemons.length === 0 && allPokemonsError && <Text color="red.500">Oh no, there was an error</Text>}
+
         </Box>
     );
 };

@@ -13,7 +13,15 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      boxShadow: {
+        'pokemon-card': '0px 0px 36px 15px rgb(243, 206, 62)',
+      },
     },
+  },
+  variants: {
+    extend: {
+      boxShadow: ['hover'],
+    }
   },
   plugins: [],
 };
